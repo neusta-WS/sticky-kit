@@ -1,5 +1,5 @@
 ###*
-@license Sticky-kit v1.1.3 | MIT | Leaf Corcoran 2015 | http://leafo.net
+@license Sticky-kit v1.1.2 | WTFPL | Leaf Corcoran 2015 | http://leafo.net
 ###
 
 $ = @jQuery or window.jQuery
@@ -24,20 +24,6 @@ $.fn.stick_in_parent = (opts={}) ->
   doc = $(document)
 
   enable_bottoming = true unless enable_bottoming?
-
-  # we need this because jquery's version (along with css()) rounds everything
-  outer_width = (el) ->
-    if window.getComputedStyle
-      _el = el[0]
-      computed = window.getComputedStyle el[0]
-
-      w = parseFloat(computed.getPropertyValue("width")) + parseFloat(computed.getPropertyValue("margin-left")) + parseFloat(computed.getPropertyValue("margin-right"))
-
-      if computed.getPropertyValue("box-sizing") != "border-box"
-        w += parseFloat(computed.getPropertyValue("border-left-width")) + parseFloat(computed.getPropertyValue("border-right-width")) + parseFloat(computed.getPropertyValue("padding-left")) + parseFloat(computed.getPropertyValue("padding-right"))
-      w
-    else
-      el.outerWidth true
 
   for elm in @
     ((elm, padding_bottom, parent_top, parent_height, top, height, el_float, detached) ->
@@ -93,7 +79,7 @@ $.fn.stick_in_parent = (opts={}) ->
 
         el_float = elm.css "float"
         spacer.css({
-          width: outer_width elm
+          width: elm.outerWidth true
           height: height
           display: elm.css "display"
           "vertical-align": elm.css "vertical-align"
